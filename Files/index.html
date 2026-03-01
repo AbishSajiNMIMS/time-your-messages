@@ -1,0 +1,324 @@
+set WA_CHROME_PATH="C:\Program Files\Opera\launcher.exe"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Message Scheduler</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #075e54;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 500;
+        }
+        
+        .whatsapp-notice {
+            background: linear-gradient(135deg, #128c7e 0%, #075e54 100%);
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(7, 94, 84, 0.2);
+        }
+        
+        .whatsapp-notice strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #075e54;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="datetime-local"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #25d366;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+            background-color: white;
+        }
+        
+        .input-group input[type="number"] {
+            width: 100px;
+            flex-shrink: 0;
+        }
+        
+        .input-group input[type="text"] {
+            flex: 1;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .section-title {
+            color: #128c7e;
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e3e3e3;
+            padding-bottom: 10px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #25d366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        
+        button:hover {
+            background: #20ba58;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+        
+        .number-format-note {
+            background-color: #e8f5e9;
+            border-left: 4px solid #25d366;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #2e7d32;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 WhatsApp Scheduler</h1>
+        
+        <div class="whatsapp-notice">
+            <strong>⚠️ Important</strong>
+            Make sure WhatsApp Web is open in your browser before scheduling messages. The scheduler will use your logged-in session to send messages.
+        </div>
+        
+        <div class="number-format-note">
+            <strong>📌 Note:</strong> All phone numbers are formatted with country codes. Enter the country code separately and your number without the + symbol.
+        </div>
+        <div class="number-format-note">
+            Common country codes you can use:
+            <ul style="margin-top:8px; font-size:13px;">
+                <li>India: +91</li>
+                <li>United States/Canada: +1</li>
+                <li>United Kingdom: +44</li>
+                <li>Australia: +61</li>
+                <li>Germany: +49</li>
+                <li>France: +33</li>
+                <li>Brazil: +55</li>
+            </ul>
+            <p style="margin-top:10px;font-size:13px;">
+                This tool normally automates <strong>Chrome/Chromium</strong>, but
+                Opera is also supported. Set the <code>WA_CHROME_PATH</code> (or
+                <code>CHROME_PATH</code>) environment variable to your Opera
+                executable before running if you're using Opera.
+            </p>
+        </div>
+        
+        <form id="scheduleForm">
+            <!-- Sender Section -->
+            <div class="section-title">👤 Sender</div>
+            
+            <div class="form-group">
+                <label for="senderCountry">Sender Country Code</label>
+                <input type="number" id="senderCountry" name="sender_country" placeholder="e.g., 1, 44, 91" required>
+                <div class="hint">Your country code (e.g., 1 for USA, 44 for UK, 91 for India)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="sender">Sender Phone Number</label>
+                <input type="text" id="sender" name="sender" placeholder="e.g., 2025551234" required>
+                <div class="hint">Your phone number without country code</div>
+            </div>
+            
+            <!-- Recipient Section -->
+            <div class="section-title">👥 Recipient</div>
+            
+            <div class="form-group">
+                <label for="recipientCountry">Recipient Country Code</label>
+                <input type="number" id="recipientCountry" name="recipient_country" placeholder="e.g., 1, 44, 91" required>
+                <div class="hint">Recipient's country code (e.g., 1 for USA, 44 for UK, 91 for India)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="recipient">Recipient Phone Number</label>
+                <input type="text" id="recipient" name="recipient" placeholder="e.g., 5559876543" required>
+                <div class="hint">Recipient's phone number without country code</div>
+            </div>
+            
+            <!-- Message Section -->
+            <div class="section-title">💬 Message</div>
+            
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Enter your message here..." required></textarea>
+            </div>
+            
+            <!-- Schedule Section -->
+            <div class="section-title">⏰ Schedule</div>
+            
+            <div class="form-group">
+                <label for="sendAt">Send At</label>
+                <input type="datetime-local" id="sendAt" name="send_at" required>
+                <div class="hint">When should this message be sent?</div>
+            </div>
+            
+            <button type="submit">Schedule Message</button>
+            
+            <div id="message" class="message"></div>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = 'message';
+            
+            const formData = new FormData(e.target);
+            const data = {
+                sender: formData.get('sender'),
+                sender_country: formData.get('sender_country'),
+                recipient: formData.get('recipient'),
+                recipient_country: formData.get('recipient_country'),
+                message: formData.get('message'),
+                send_at: formData.get('send_at')
+            };
+            
+            try {
+                const response = await fetch('/schedule', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.textContent = `✅ ${result.message} (screenshots will be saved under /screenshots)`;
+                    messageDiv.className = 'message success';
+                    e.target.reset();
+                    
+                    // Hide message after 5 seconds
+                    setTimeout(() => {
+                        messageDiv.className = 'message';
+                    }, 5000);
+                } else {
+                    messageDiv.textContent = `❌ Error: ${result.message}`;
+                    messageDiv.className = 'message error';
+                }
+            } catch (error) {
+                messageDiv.textContent = `❌ Network error: ${error.message}`;
+                messageDiv.className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>
